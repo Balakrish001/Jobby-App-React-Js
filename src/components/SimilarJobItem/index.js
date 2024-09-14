@@ -1,49 +1,43 @@
-import {AiFillStar} from 'react-icons/ai'
-import {BsBriefcaseFill} from 'react-icons/bs'
-import {GoLocation} from 'react-icons/go'
+import {BsFillStarFill, BsBriefcaseFill} from 'react-icons/bs'
+import {MdLocationOn} from 'react-icons/md'
 import './index.css'
 
-const SimilarJobItem = props => {
-  const {jobDetails} = props
-  const {
-    companyLogoUrl,
-    employmentType,
-    jobDescription,
-    location,
-    title,
-    rating,
-  } = jobDetails
+const SimilarProductItem = props => {
+  const {productDetails} = props
+  const item = productDetails
 
   return (
-    <li className="similar-list-docs">
-      <div className="logo-container">
+    <li key={item.id} className="job-item-card2">
+      <div className="company-container">
         <img
-          src={companyLogoUrl}
+          className="companyLogo"
+          src={item.companyLogoUrl}
           alt="similar job company logo"
-          className="company-logo-url"
         />
         <div>
-          <h1 className="company-logo-title">{title}</h1>
-          <div className="rating-container">
-            <AiFillStar className="star-icon" />
-            <p className="count-rating">{rating}</p>
+          <h1 className="company-title">{item.title}</h1>
+          <div className="company-container">
+            <BsFillStarFill className="star" />
+            <p className="rating">{item.rating}</p>
           </div>
         </div>
       </div>
-      <h1 className="similar-desc-heading">Description</h1>
-      <p className="similar-desc">{jobDescription}</p>
-      <div className="location-container-flex-justify">
-        <div className="responsive">
-          <GoLocation className="location-logo" />
-          <p className="location-desc">{location}</p>
+      <div className="company-info">
+        <div className="company-details">
+          <MdLocationOn className="location" />
+          <p className="place">{item.location}</p>
+          <BsBriefcaseFill className="type-icon" />
+          <p className="place">{item.employmentType}</p>
         </div>
-        <div className="responsive">
-          <BsBriefcaseFill className="location-logo-brief" />
-          <p className="location-desc">{employmentType}</p>
-        </div>
+        <p className="salary">{item.packagePerAnnum}</p>
+      </div>
+      <hr className="line1" />
+      <div>
+        <h1 className="job-description">Description</h1>
+        <p className="job-description-text">{item.jobDescription}</p>
       </div>
     </li>
   )
 }
 
-export default SimilarJobItem
+export default SimilarProductItem

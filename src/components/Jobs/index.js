@@ -1,14 +1,25 @@
-import Header from '../Header'
-import JobProfileSection from '../JobProfileSection'
+import {Component} from 'react'
+import JobItemDetailsCards from '../JobItemDetailsCards'
 import './index.css'
+import Header from '../Header'
 
-const Jobs = () => (
-  <>
-    <Header />
-    <div className="job-profile-container">
-      <JobProfileSection />
-    </div>
-  </>
-)
+class Jobs extends Component {
+  render() {
+    const {salaryRangesList, employmentTypesList} = this.props
+
+    return (
+      <div className="Job-container">
+        <Header />
+        <div className="job-details-container">
+          <JobItemDetailsCards
+            salaryRangesList={salaryRangesList}
+            employmentTypesList={employmentTypesList}
+            renderProfileDetail={this.renderProfileDetails}
+          />
+        </div>
+      </div>
+    )
+  }
+}
 
 export default Jobs

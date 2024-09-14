@@ -1,68 +1,79 @@
 import {Component} from 'react'
-import Loader from 'react-loader-spinner'
 import Cookies from 'js-cookie'
+import Loader from 'react-loader-spinner'
 import './index.css'
 
 const apiStatusConstants = {
   initial: 'INITIAL',
-  inProgress: 'INPROGRESS',
   success: 'SUCCESS',
   failure: 'FAILURE',
+  inProgress: 'INPROGRESS',
 }
 
-class ProfileDetails extends Component {
+class ProfileCard extends Component {
   state = {
-    profileList: [],
+    profileData: {},
     apiStatus: apiStatusConstants.initial,
+    selectedBoxes: [],
   }
 
   componentDidMount() {
-    this.getProfileDetails()
+    this.getProfile()
   }
 
-  getProfileDetails = async () => {
+  selectedCheckBox = id => {
+    this.setState(prev => ({
+      selectedBoxes: [...prev.selectedBoxes, id],
+    }))
+  }
+
+  getProfile = async () => {
     this.setState({
       apiStatus: apiStatusConstants.inProgress,
     })
-
     const jwtToken = Cookies.get('jwt_token')
-    const url = 'https://apis.ccbp.in/profile'
     const options = {
       headers: {
         Authorization: `Bearer ${jwtToken}`,
       },
       method: 'GET',
     }
-    const response = await fetch(url, options)
+    const response = await fetch('https://apis.ccbp.in/profile', options)
     if (response.ok === true) {
       const data = await response.json()
-      const profileData = {
-        name: data.profile_details.name,
-        profileImageUrl: data.profile_details.profile_image_url,
-        shortBio: data.profile_details.short_bio,
+      const updateData = {
+        name: 'Balakrishnan K',
+        imageUrl: data.profile_details.profile_image_url,
+        bio: 'MERN Full Stack Developer & Automation Engineer',
       }
       this.setState({
-        profileList: profileData,
+        profileData: updateData,
         apiStatus: apiStatusConstants.success,
+      })
+    } else {
+      this.setState({
+        apiStatus: apiStatusConstants.failure,
       })
     }
   }
 
-  renderProfileDetails = () => {
-    const {profileList} = this.state
-    const {name, profileImageUrl, shortBio} = profileList
-
+  renderProfile = () => {
+    const {profileData} = this.state
     return (
       <div className="profile-container">
-        <img src={profileImageUrl} alt="profile" className="profile-logo" />
-        <h1 className="name-heading">{name}</h1>
-        <p className="bio">{shortBio}</p>
+        <img
+          src={profileData.imageUrl}
+          className="profile-logo"
+          alt="profile"
+        />
+        <h1 className="name-heading">{profileData.name}</h1>
+        <p className="bio">{profileData.bio}</p>
       </div>
     )
   }
 
-  renderLoadingView = () => (
-    <div className="profile-loader-container" data-testid="loader">
+  renderProgressView = () => (
+    <div className="loader-container" data-testid="loader">
       <Loader type="ThreeDots" color="#ffffff" height="50" width="50" />
     </div>
   )
@@ -73,27 +84,32 @@ class ProfileDetails extends Component {
         type="button"
         data-testid="button"
         className="job-item-failure-button"
-        onClick={this.getProfileDetails}
+        onClick={this.getProfile}
       >
         Retry
       </button>
     </div>
   )
 
-  render() {
+  renderProfileDetails = () => {
     const {apiStatus} = this.state
 
     switch (apiStatus) {
       case apiStatusConstants.success:
-        return this.renderProfileDetails()
+        return this.renderProfile()
       case apiStatusConstants.inProgress:
-        return this.renderLoadingView()
+        return this.renderProgressView()
       case apiStatusConstants.failure:
         return this.renderFailureView()
+
       default:
         return null
     }
   }
+
+  render() {
+    return <>{this.renderProfileDetails()}</>
+  }
 }
 
-export default ProfileDetails
+export default ProfileCard

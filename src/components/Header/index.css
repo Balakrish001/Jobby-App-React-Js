@@ -1,41 +1,72 @@
-.navbar-container {
-  background-color: #202020;
+.header-container {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-}
-.website-logo {
-  width: 150px;
-  height: 40px;
-  margin-top: 10px;
-  margin-left: 100px;
-}
-.header-list-items {
+  align-items: center;
+  background-color: #272727;
+  padding: 10px 30px;
+  padding-top: 20px;
   list-style-type: none;
+}
+
+.header-logo {
+  height: 30px;
+  width: 100px;
+}
+
+.pages {
   display: flex;
-  justify-content: center;
-  margin-right: 125px;
 }
-.home {
-  color: #fff;
-  font-size: 18px;
+
+.page-links {
+  text-decoration: none;
+}
+
+.page-name {
+  color: #ffffff;
   font-family: 'Roboto';
-  font-weight: 500;
+  margin-right: 10px;
 }
-.logout-button {
+
+.logout-btn {
   background-color: #4f46e5;
-  padding: 10px;
-  border-radius: 6px;
-  color: #fff;
-  font-family: 'Roboto';
-  font-weight: 500;
+  color: white;
+  font-size: 12px;
+  outline: none;
   border: none;
-  margin-right: 55px;
-  width: 110px;
+  padding: 7px 15px;
+  border-radius: 4px;
 }
-.jon-heading {
+
+.mobile-navbar {
+  display: none;
+}
+
+.nav-bar-image {
+  width: 50px;
   margin-left: 40px;
 }
-.link-item {
-  text-decoration: none;
+
+.nav-mobile-btn {
+  border: none;
+  outline: none;
+  background-color: transparent;
+}
+
+@media screen and (max-width: 768px) {
+  .header-container {
+    display: none;
+  }
+
+  .mobile-navbar {
+    background-color: #272727;
+    display: flex;
+    padding: 15px;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .mobile-header-logo {
+    height: 70px;
+    width: 140px;
+  }
 }
